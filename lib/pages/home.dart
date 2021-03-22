@@ -20,6 +20,10 @@ class HomeState extends State<Home> {
     if (itemList == null) {
       itemList = List<Item>();
     }
+    if (itemList != null) {
+      createListView();
+      updateListView();
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Item'),
