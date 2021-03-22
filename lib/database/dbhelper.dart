@@ -14,10 +14,10 @@ class DbHelper {
     //untuk menentukan nama database dan lokasi yg dibuat
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'item.db';
-    //untuk menentukan nama database dan lokasi yg dibuat
+    //untuk mentabase dentukan nama dan lokasi yg dibuat
 
     //create, read databases
-    var itemDatabase = openDatabase(path, version: 4, onCreate: _createDb);
+    var itemDatabase = openDatabase(path, version: 1, onCreate: _createDb);
     //create, read databases
 
     return itemDatabase; //mengembalikan nilai object sebagai hasil dari fungsinya
@@ -43,21 +43,22 @@ price INTEGER
 
 //create databases
   Future<int> insert(Item object) async {
-    Database db = await this.initDb();
+    Database db = await this.database;
     int count = await db.insert('item', object.toMap());
     return count;
   }
 
 //update databases
   Future<int> update(Item object) async {
-    Database db = await this.initDb();
+    Database db = await this.database;
     int count = await db
         .update('item', object.toMap(), where: 'id=?', whereArgs: [object.id]);
     return count;
-  } //delete databases
+  }
+  //delete databases
 
   Future<int> delete(int id) async {
-    Database db = await this.initDb();
+    Database db = await this.database;
     int count = await db.delete('item', where: 'id=?', whereArgs: [id]);
     return count;
   }

@@ -14,6 +14,7 @@ class HomeState extends State<Home> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
   List<Item> itemList;
+
   @override
   Widget build(BuildContext context) {
     if (itemList == null) {
@@ -79,13 +80,23 @@ class HomeState extends State<Home> {
             trailing: GestureDetector(
               child: Icon(Icons.delete),
               onTap: () async {
-//TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
+                //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
+                int id = this.itemList[index].id;
+                int result = await dbHelper.delete(id);
+                itemList.removeAt(index);
+                updateListView();
               },
             ),
             onTap: () async {
               var item =
                   await navigateToEntryForm(context, this.itemList[index]);
 //TODO 4 Panggil Fungsi untuk Edit data
+              if (item != null) {
+                int result = await dbHelper.update(item);
+                if (result > 0) {
+                  updateListView();
+                }
+              }
             },
           ),
         );
