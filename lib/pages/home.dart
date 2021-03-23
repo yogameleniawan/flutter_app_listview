@@ -14,13 +14,16 @@ class HomeState extends State<Home> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
   List<Item> itemList;
+  String emptyText = "";
 
   @override
   Widget build(BuildContext context) {
+    emptyText = "Empty List";
     if (itemList == null) {
       itemList = List<Item>();
     }
-    if (itemList != null) {
+    if (itemList.length > 0) {
+      emptyText = "";
       createListView();
       updateListView();
     }
@@ -29,6 +32,10 @@ class HomeState extends State<Home> {
         title: Text('Daftar Item'),
       ),
       body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(emptyText),
+        ),
         Expanded(
           child: createListView(),
         ),
